@@ -8,7 +8,7 @@ import (
 	"github.com/MatthewJones517/game_sales_api/database"
 )
 
-func getAllGames(resultsPerPage int, page int) ([]Game, error) {
+func getAllGames(resultsPerPage int, page int, orderBy string) ([]Game, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -31,7 +31,7 @@ func getAllGames(resultsPerPage int, page int) ([]Game, error) {
 			jp_sales, 
 			other_sales, 
 			global_sales
-		FROM games LIMIT ?, ?;`, limitStart, limitEnd)
+		FROM games LIMIT ?, ? ORDER BY global_sales ?;`, limitStart, limitEnd, orderBy)
 
 	if err != nil {
 		log.Println(err.Error())

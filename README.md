@@ -10,9 +10,6 @@ Returns all data in paginated form. If no parameters are provided this will simp
 
 - page - The page of results to return
 - resultsPerPage - Number of results per page (up to 50)
-- orderby
-  - "asc" - Sales Ascending
-  - "desc" - Sales Descending
 
 ### /games/{rank}
 

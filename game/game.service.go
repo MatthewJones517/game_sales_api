@@ -5,18 +5,15 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 func handleAllGames(w http.ResponseWriter, r *http.Request) {
 	// Get URL parameters
 	pageNumParam := r.URL.Query()["page"]
 	resultsPerPageParam := r.URL.Query()["resultsPerPage"]
-	orderByParam := r.URL.Query()["orderby"]
 
 	var pageNum int
 	var resultsPerPage int
-	var orderBy string
 	var err error
 
 	// Check that a valid page number was passed in.
@@ -47,19 +44,7 @@ func handleAllGames(w http.ResponseWriter, r *http.Request) {
 		resultsPerPage = 50
 	}
 
-	// Check that a valid orderBy was passed in.
-	if len(orderByParam) == 0 || orderByParam == nil {
-		orderBy = "desc"
-	} else {
-		orderBy = strings.ToLower(orderByParam[0])
-
-		if orderBy != "asc" && orderBy != "desc" {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-	}
-
-	results, err := getAllGames(resultsPerPage, pageNum, orderBy)
+	results, err := getAllGames(resultsPerPage, pageNum)
 
 	handleResults(w, results, err)
 }

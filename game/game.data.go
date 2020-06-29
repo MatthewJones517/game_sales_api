@@ -8,7 +8,7 @@ import (
 	"github.com/MatthewJones517/game_sales_api/database"
 )
 
-func getAllGames(resultsPerPage int, page int, orderBy string) ([]Game, error) {
+func getAllGames(resultsPerPage int, page int) ([]Game, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -17,7 +17,7 @@ func getAllGames(resultsPerPage int, page int, orderBy string) ([]Game, error) {
 	}
 
 	limitStart := resultsPerPage * (page - 1)
-	limitEnd := resultsPerPage * page
+	limitEnd := resultsPerPage
 
 	results, err := database.DbConn.QueryContext(ctx, `SELECT 
 			games.rank, 
@@ -31,9 +31,9 @@ func getAllGames(resultsPerPage int, page int, orderBy string) ([]Game, error) {
 			jp_sales, 
 			other_sales, 
 			global_sales
-		FROM games 
-		ORDER BY global_sales ?
-		LIMIT ?, ?;`, orderBy, limitStart, limitEnd)
+		FROM games
+		ORDER BY global_sales desc
+		LIMIT ?, ?;`, limitStart, limitEnd)
 
 	if err != nil {
 		log.Println(err.Error())

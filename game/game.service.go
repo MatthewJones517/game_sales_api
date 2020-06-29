@@ -81,3 +81,10 @@ func handleResults(w http.ResponseWriter, results []Game, err error) {
 		log.Fatal(err)
 	}
 }
+
+// SetupRoutes prepares the games package to handle its relevant routes
+func SetupRoutes() {
+	allGamesHandler := http.HandlerFunc(handleAllGames)
+
+	http.Handle("/games/all", allGamesHandler)
+}

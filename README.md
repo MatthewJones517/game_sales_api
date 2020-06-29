@@ -2,11 +2,11 @@
 
 ## Endpoints
 
-### /all
+### /games/all
 
 Returns all data in paginated form. If no parameters are provided this will simply return the top 50 results.
 
-#### Query Parameters
+#### URL Parameters
 
 - page - The page of results to return
 - resultsPerPage - Number of results per page (up to 50)
@@ -14,18 +14,22 @@ Returns all data in paginated form. If no parameters are provided this will simp
   - "asc" - Sales Ascending
   - "desc" - Sales Descending
 
-### /search
+### /games/{rank}
+
+Returns the game at a specific ranking number
+
+### /games/search
 
 Searches the data based upon specified parameters.
 
-#### Query Parameters
+#### Search Query URL Parameters
 
 - **name** - The name of a specific game (will do approximate match)
 - **platform** - A specifit platform (ping /platforms for options)
 - **genre** - A specific genre (ping /genres for options)
 - **publisher** - A specific publisher (ping /publishers for options)
 - **minSales** - The minimum number of global sales a title should have achieved in millions, shorted to decimal form (eg: 3.01 for 3,100,000)
-- **maxSales** - The maximum number of global sales a title should have achieved in millions, shorted to decimal form (eg: 3.01 for 3,100,000)
+- **maxSales** - The maximum number of global sales a title should have achieved in millions, shorted to decimal form.
 - **orderby**
   - **"asc"** - Sales Ascending
   - **"desc"** - Sales Descending
@@ -41,7 +45,3 @@ Returns a list of valid genres. Includes total global sales for each genre in mi
 ### /publishers
 
 Returns a list of valid publishers. Includes total global sales for each publisher in millions.
-
-### /rank/{number}
-
-Returns the game at a specific rank.

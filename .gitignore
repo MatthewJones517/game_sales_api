@@ -55,3 +55,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Ignore sensitive files
+config.env

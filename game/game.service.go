@@ -83,9 +83,13 @@ func handleGameSearch(w http.ResponseWriter, r *http.Request) {
 	minSales := getSearchURLParameter(r, "minSales")
 	maxSales := getSearchURLParameter(r, "maxSales")
 
-	results, err := searchForGames(name, platform, genre, publisher, minSales, maxSales)
+	if name == "" && platform == "" && genre == "" && publisher == "" && minSales == "" && maxSales == "" {
+		handleAllGames(w, r)
+	} else {
+		results, err := searchForGames(name, platform, genre, publisher, minSales, maxSales)
 
-	processResults(w, results, err)
+		processResults(w, results, err)
+	}
 }
 
 func getSearchURLParameter(r *http.Request, paramName string) string {

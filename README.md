@@ -22,7 +22,7 @@ Searches the data based upon specified parameters.
 #### Search Query URL Parameters
 
 - **name** - The name of a specific game (will do approximate match)
-- **platform** - A specifit platform (ping /platforms for options)
+- **platform** - A specific platform (ping /platforms for options)
 - **genre** - A specific genre (ping /genres for options)
 - **publisher** - A specific publisher (ping /publishers for options)
 - **minSales** - The minimum number of global sales a title should have achieved in millions, shorted to decimal form (eg: 3.01 for 3,100,000)

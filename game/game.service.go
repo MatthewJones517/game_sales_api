@@ -48,7 +48,7 @@ func handleAllGames(w http.ResponseWriter, r *http.Request) {
 
 	results, err := getAllGames(resultsPerPage, pageNum)
 
-	handleResults(w, results, err)
+	processResults(w, results, err)
 }
 
 func handleSingleGame(w http.ResponseWriter, r *http.Request) {
@@ -71,10 +71,34 @@ func handleSingleGame(w http.ResponseWriter, r *http.Request) {
 	results, err := getSingleGameByRank(rank)
 
 	// Display to user
-	handleResults(w, results, err)
+	processResults(w, results, err)
 }
 
-func handleResults(w http.ResponseWriter, results []Game, err error) {
+func handleGameSearch(w http.ResponseWriter, r *http.Request) {
+	// Get query parameters
+	name := getSearchURLParameter(r, "name")
+	platform := getSearchURLParameter(r, "platform")
+	genre := getSearchURLParameter(r, "genre")
+	publisher := getSearchURLParameter(r, "publisher")
+	minSales := getSearchURLParameter(r, "minSales")
+	maxSales := getSearchURLParameter(r, "maxSales")
+
+	results, err := searchForGames(name, platform, genre, publisher, minSales, maxSales)
+
+	processResults(w, results, err)
+}
+
+func getSearchURLParameter(r *http.Request, paramName string) string {
+	value := r.URL.Query()[paramName]
+
+	if len(value) == 0 {
+		return ""
+	}
+
+	return value[0]
+}
+
+func processResults(w http.ResponseWriter, results []Game, err error) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -96,7 +120,9 @@ func handleResults(w http.ResponseWriter, results []Game, err error) {
 func SetupRoutes() {
 	allGamesHandler := http.HandlerFunc(handleAllGames)
 	singleGameHander := http.HandlerFunc(handleSingleGame)
+	searchGamesHandler := http.HandlerFunc(handleGameSearch)
 
 	http.Handle("/games/all", allGamesHandler)
+	http.Handle("/games/search", searchGamesHandler)
 	http.Handle("/games/", singleGameHander)
 }

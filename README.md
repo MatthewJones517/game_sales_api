@@ -6,6 +6,10 @@ I'm a firm believer that the best way to learn a language is by programming in i
 
 I found a [dataset on Kaggle](https://www.kaggle.com/gregorut/videogamesales) that contained a list of over 16k video games that sold at least 100,000 copies. I then wrote this API that allows you to access that data in some interesting ways.
 
+If you wish to give this a try without downloading the source, I've got it running over at [http://gamedata.matthewrjones.me](http://gamedata.matthewrjones.me). Feel free to ping one of the endpoints below with Postman. 
+
+Please note that this is running on a $5 Linode virtual box, so don't use this for a production application. 
+
 ## Endpoints
 
 ### /games/all

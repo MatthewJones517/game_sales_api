@@ -49,7 +49,7 @@ func handleAllGames(w http.ResponseWriter, r *http.Request) {
 
 	// Check that a valid orderBy was passed in.
 	if len(orderByParam) == 0 || orderByParam == nil {
-		orderBy = "asc"
+		orderBy = "desc"
 	} else {
 		orderBy = strings.ToLower(orderByParam[0])
 

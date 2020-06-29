@@ -32,15 +32,15 @@ Searches the data based upon specified parameters.
 
 ### /platforms
 
-Returns a list of valid platforms. Includes total global sales for each platform.
+Returns a list of valid platforms. Includes total global sales for each platform in millions.
 
 ### /genres
 
-Returns a list of valid genres. Includes total global sales for each genre.
+Returns a list of valid genres. Includes total global sales for each genre in millions.
 
 ### /publishers
 
-Returns a list of valid publishers. Includes total global sales for each publisher.
+Returns a list of valid publishers. Includes total global sales for each publisher in millions.
 
 ### /rank/{number}
 

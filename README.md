@@ -27,9 +27,6 @@ Searches the data based upon specified parameters.
 - **publisher** - A specific publisher (ping /publishers for options)
 - **minSales** - The minimum number of global sales a title should have achieved in millions, shorted to decimal form (eg: 3.01 for 3,100,000)
 - **maxSales** - The maximum number of global sales a title should have achieved in millions, shorted to decimal form.
-- **orderby**
-  - **"asc"** - Sales Ascending
-  - **"desc"** - Sales Descending
 
 ### /platforms
 

@@ -2,9 +2,11 @@ package game
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func handleAllGames(w http.ResponseWriter, r *http.Request) {
@@ -49,6 +51,29 @@ func handleAllGames(w http.ResponseWriter, r *http.Request) {
 	handleResults(w, results, err)
 }
 
+func handleSingleGame(w http.ResponseWriter, r *http.Request) {
+	// Get rank from url
+	urlPathSegments := strings.Split(r.URL.Path, fmt.Sprintf("%s/", "games"))
+
+	if len(urlPathSegments[1:]) != 1 {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	rank, err := strconv.Atoi(urlPathSegments[1])
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	// Make database request
+	results, err := getSingleGameByRank(rank)
+
+	// Display to user
+	handleResults(w, results, err)
+}
+
 func handleResults(w http.ResponseWriter, results []Game, err error) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -70,6 +95,8 @@ func handleResults(w http.ResponseWriter, results []Game, err error) {
 // SetupRoutes prepares the games package to handle its relevant routes
 func SetupRoutes() {
 	allGamesHandler := http.HandlerFunc(handleAllGames)
+	singleGameHander := http.HandlerFunc(handleSingleGame)
 
 	http.Handle("/games/all", allGamesHandler)
+	http.Handle("/games/", singleGameHander)
 }

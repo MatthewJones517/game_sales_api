@@ -2,6 +2,7 @@ package game
 
 import (
 	"context"
+	"database/sql"
 	"log"
 	"time"
 
@@ -35,6 +36,32 @@ func getAllGames(resultsPerPage int, page int) ([]Game, error) {
 		ORDER BY global_sales desc
 		LIMIT ?, ?;`, limitStart, limitEnd)
 
+	return handleDatabaseResults(results, err)
+}
+
+func getSingleGameByRank(rank int) ([]Game, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	results, err := database.DbConn.QueryContext(ctx, `SELECT 
+			games.rank, 
+			name, 
+			platform, 
+			year, 
+			genre, 
+			publisher, 
+			na_sales, 
+			eu_sales, 
+			jp_sales, 
+			other_sales, 
+			global_sales
+		FROM games
+		WHERE games.rank = ?`, rank)
+
+	return handleDatabaseResults(results, err)
+}
+
+func handleDatabaseResults(results *sql.Rows, err error) ([]Game, error) {
 	if err != nil {
 		log.Println(err.Error())
 		return nil, err
@@ -52,34 +79,4 @@ func getAllGames(resultsPerPage int, page int) ([]Game, error) {
 	}
 
 	return games, nil
-}
-
-func getSingleGameByRank(rank int) (Game, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	result := database.DbConn.QueryRowContext(ctx, `SELECT 
-			games.rank, 
-			name, 
-			platform, 
-			year, 
-			genre, 
-			publisher, 
-			na_sales, 
-			eu_sales, 
-			jp_sales, 
-			other_sales, 
-			global_sales
-		FROM games
-		WHERE games.rank = ?`, rank)
-
-	var game Game
-	err := result.Scan(&game.Rank, &game.Name, &game.Platform, &game.Year, &game.Genre, &game.Publisher, &game.NASales, &game.EUSales, &game.JPSales, &game.OtherSales, &game.GlobalSales)
-
-	if err != nil {
-		log.Println(err.Error())
-		return Game{}, err
-	}
-
-	return game, nil
 }

@@ -53,3 +53,33 @@ func getAllGames(resultsPerPage int, page int) ([]Game, error) {
 
 	return games, nil
 }
+
+func getSingleGameByRank(rank int) (Game, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	result := database.DbConn.QueryRowContext(ctx, `SELECT 
+			games.rank, 
+			name, 
+			platform, 
+			year, 
+			genre, 
+			publisher, 
+			na_sales, 
+			eu_sales, 
+			jp_sales, 
+			other_sales, 
+			global_sales
+		FROM games
+		WHERE games.rank = ?`, rank)
+
+	var game Game
+	err := result.Scan(&game.Rank, &game.Name, &game.Platform, &game.Year, &game.Genre, &game.Publisher, &game.NASales, &game.EUSales, &game.JPSales, &game.OtherSales, &game.GlobalSales)
+
+	if err != nil {
+		log.Println(err.Error())
+		return Game{}, err
+	}
+
+	return game, nil
+}

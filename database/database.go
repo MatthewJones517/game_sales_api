@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 )
 
@@ -16,7 +17,7 @@ var DbConn *sql.DB
 // SetupDatabase prepares the database connection for use.
 func SetupDatabase() {
 	// Pull in connection data from env variables
-	err := godotenv.Load("sensitive.env")
+	err := godotenv.Load("config.env")
 
 	if err != nil {
 		log.Fatalf("Error loading .env file")

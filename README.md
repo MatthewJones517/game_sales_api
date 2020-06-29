@@ -4,7 +4,7 @@
 
 ### /all
 
-Returns all data in paginated form. If no parameters are provided this will simply return the top 50 results. 
+Returns all data in paginated form. If no parameters are provided this will simply return the top 50 results.
 
 #### Query Parameters
 
@@ -40,7 +40,7 @@ Returns a list of valid genres. Includes total global sales for each genre.
 
 ### /publishers
 
-Returns a list of valid publishers. Includes total global sales for each publisher. 
+Returns a list of valid publishers. Includes total global sales for each publisher.
 
 ### /rank/{number}
 

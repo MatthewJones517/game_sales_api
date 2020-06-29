@@ -4,7 +4,7 @@
 
 I'm a firm believer that the best way to learn a language is by programming in it. Go is no different. I started by reading through the docs to get a high level idea of how things worked, then decided to write this test project.
 
-I found a [dataset on Kaggle](https://www.kaggle.com/gregorut/videogamesales) that contained a list of over 16k video games that sold at least 100,000 copies. I then wrote this API that allows you to access that data in some interesting ways. 
+I found a [dataset on Kaggle](https://www.kaggle.com/gregorut/videogamesales) that contained a list of over 16k video games that sold at least 100,000 copies. I then wrote this API that allows you to access that data in some interesting ways.
 
 ## Endpoints
 

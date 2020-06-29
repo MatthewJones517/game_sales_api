@@ -68,10 +68,10 @@ func searchForGames(name string, platform string, genre string, publisher string
 
 	sql := "SELECT games.rank, name, platform, year, genre, publisher, na_sales, eu_sales, jp_sales, other_sales, global_sales FROM games WHERE "
 
-	addSearchConditional("name", name, "=", &firstConditionAdded, &sql, &arguments)
-	addSearchConditional("platform", platform, "=", &firstConditionAdded, &sql, &arguments)
-	addSearchConditional("genre", genre, "=", &firstConditionAdded, &sql, &arguments)
-	addSearchConditional("publisher", publisher, "=", &firstConditionAdded, &sql, &arguments)
+	addSearchConditional("name", name, "LIKE", &firstConditionAdded, &sql, &arguments)
+	addSearchConditional("platform", platform, "LIKE", &firstConditionAdded, &sql, &arguments)
+	addSearchConditional("genre", genre, "LIKE", &firstConditionAdded, &sql, &arguments)
+	addSearchConditional("publisher", publisher, "LIKE", &firstConditionAdded, &sql, &arguments)
 	addSearchConditional("global_sales", minSales, ">", &firstConditionAdded, &sql, &arguments)
 	addSearchConditional("global_sales", maxSales, "<", &firstConditionAdded, &sql, &arguments)
 
@@ -89,6 +89,11 @@ func addSearchConditional(argumentName string, argument string, operator string,
 			*sql += " AND "
 		}
 		*sql += argumentName + " " + operator + " ?"
+
+		if operator == "LIKE" {
+			argument = "%" + argument + "%"
+		}
+
 		*arguments = append(*arguments, argument)
 
 		*firstConditionAdded = true

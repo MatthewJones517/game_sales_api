@@ -31,7 +31,9 @@ func getAllGames(resultsPerPage int, page int, orderBy string) ([]Game, error) {
 			jp_sales, 
 			other_sales, 
 			global_sales
-		FROM games LIMIT ?, ? ORDER BY global_sales ?;`, limitStart, limitEnd, orderBy)
+		FROM games 
+		ORDER BY global_sales ?
+		LIMIT ?, ?;`, orderBy, limitStart, limitEnd)
 
 	if err != nil {
 		log.Println(err.Error())

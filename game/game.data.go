@@ -72,8 +72,8 @@ func searchForGames(name string, platform string, genre string, publisher string
 	addSearchConditional("platform", platform, "=", &firstConditionAdded, &sql, &arguments)
 	addSearchConditional("genre", genre, "=", &firstConditionAdded, &sql, &arguments)
 	addSearchConditional("publisher", publisher, "=", &firstConditionAdded, &sql, &arguments)
-	addSearchConditional("minSales", minSales, ">", &firstConditionAdded, &sql, &arguments)
-	addSearchConditional("maxSales", maxSales, "<", &firstConditionAdded, &sql, &arguments)
+	addSearchConditional("global_sales", minSales, ">", &firstConditionAdded, &sql, &arguments)
+	addSearchConditional("global_sales", maxSales, "<", &firstConditionAdded, &sql, &arguments)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
